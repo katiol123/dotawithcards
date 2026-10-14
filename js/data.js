@@ -192,16 +192,16 @@
 
   hero('pudge', {
     name: 'Pudge', title: 'Мясник', attr: 'str', roles: ['support', 'disabler'], pos: [4, 3, 5],
-    str: 25, agi: 14, int: 16, gs: 3.2, ga: 1.4, gi: 1.5, dmg: 32, armor: 0, ranged: false, hue: 300,
+    str: 25, agi: 14, int: 16, gs: 3.2, ga: 1.4, gi: 1.5, dmg: 34, armor: 2, ranged: false, hue: 300,
     lore: 'Мясник с крюком. Вытаскивает врагов из соседних зон и разделывает на месте.',
     build: ['boots', 'wand', 'blink', 'heart', 'aghs', 'bkb', 'ac'],
     skillOrder: ['q', 'w', 'q', 'e', 'q', 'r', 'q', 'w', 'w', 'w', 'r', 'e', 'e', 'e', 'r'],
     skills: {
       q: { name: 'Мясной крюк', icon: '🪝', card: {
         mana: [110, 120, 130, 140], tg: 'enemyNear',
-        desc: l => `Бросает крюк в врага в своей или соседней зоне. <b>75%</b> шанс попадания: притягивает цель к Паджу и наносит <b>${L([100, 190, 280, 370], l)}</b> чистого урона.`,
+        desc: l => `Бросает крюк в врага в своей или соседней зоне. <b>80%</b> шанс попадания: притягивает цель к Паджу и наносит <b>${L([100, 190, 280, 370], l)}</b> чистого урона.`,
         play: ({ s, h, t, l, E }) => {
-          if (E.chance(s, 0.75)) { E.fx(s, { type: 'proc', uid: t.uid, text: 'Крюк!' }); if (t.zone !== h.zone) E.moveTo(s, t, h.zone, true); E.dmg(s, h, t, L([100, 190, 280, 370], l), 'pure'); }
+          if (E.chance(s, 0.8)) { E.fx(s, { type: 'proc', uid: t.uid, text: 'Крюк!' }); if (t.zone !== h.zone) E.moveTo(s, t, h.zone, true); E.dmg(s, h, t, L([100, 190, 280, 370], l), 'pure'); }
           else { E.fx(s, { type: 'miss', uid: t.uid }); E.log(s, `${E.nm(h)} промахивается крюком.`); }
         },
       } },
@@ -258,7 +258,7 @@
 
   hero('wk', {
     name: 'Wraith King', title: 'Король-призрак', attr: 'str', roles: ['carry', 'disabler'], pos: [1, 3, 2],
-    str: 21, agi: 18, int: 18, gs: 2.4, ga: 1.7, gi: 1.5, dmg: 32, armor: 1, ranged: false, hue: 120,
+    str: 21, agi: 18, int: 18, gs: 2.4, ga: 1.7, gi: 1.5, dmg: 30, armor: 1, ranged: false, hue: 120,
     lore: 'Бессмертный король, восстающий из мёртвых и ведущий за собой армию скелетов.',
     build: ['boots', 'treads', 'bfury', 'deso', 'bkb', 'daedalus', 'ac'],
     skillOrder: ['q', 'e', 'e', 'w', 'e', 'r', 'e', 'w', 'w', 'w', 'r', 'q', 'q', 'q', 'r'],
@@ -328,7 +328,7 @@
 
   hero('pa', {
     name: 'Phantom Assassin', title: 'Фантомная убийца', attr: 'agi', roles: ['carry', 'escape'], pos: [1, 2],
-    str: 21, agi: 25, int: 15, gs: 2.2, ga: 3.4, gi: 1.7, dmg: 30, armor: 2, ranged: false, hue: 260,
+    str: 22, agi: 25, int: 15, gs: 2.3, ga: 3.4, gi: 1.7, dmg: 32, armor: 2, ranged: false, hue: 260,
     lore: 'Безмолвная убийца в вуали. Её клинок находит уязвимость в любой броне.',
     build: ['boots', 'treads', 'bfury', 'deso', 'bkb', 'satanic', 'butterfly'],
     skillOrder: ['q', 'w', 'q', 'e', 'q', 'r', 'q', 'w', 'w', 'w', 'r', 'e', 'e', 'e', 'r'],
@@ -358,7 +358,7 @@
 
   hero('drow', {
     name: 'Drow Ranger', title: 'Лучница-дроу', attr: 'agi', roles: ['carry', 'pusher'], pos: [1, 2],
-    str: 21, agi: 24, int: 15, gs: 2.2, ga: 3.0, gi: 1.4, dmg: 27, armor: 0, ranged: true, hue: 180,
+    str: 20, agi: 24, int: 15, gs: 2.1, ga: 2.9, gi: 1.4, dmg: 27, armor: 0, ranged: true, hue: 180,
     lore: 'Ледяная лучница. Её стрелы замедляют, а залпы накрывают целые отряды.',
     build: ['boots', 'treads', 'deso', 'mkb', 'bkb', 'daedalus', 'butterfly'],
     skillOrder: ['q', 'e', 'q', 'w', 'e', 'r', 'e', 'e', 'q', 'q', 'r', 'w', 'w', 'w', 'r'],
@@ -480,7 +480,7 @@
 
   hero('zeus', {
     name: 'Zeus', title: 'Владыка небес', attr: 'int', roles: ['mid', 'nuker'], pos: [2, 4, 5],
-    str: 23, agi: 11, int: 22, gs: 2.5, ga: 1.2, gi: 3.3, dmg: 30, armor: 3, ranged: true, hue: 50,
+    str: 24, agi: 11, int: 23, gs: 2.6, ga: 1.2, gi: 3.3, dmg: 30, armor: 3, ranged: true, hue: 50,
     lore: 'Громовержец, способный поразить врага в любой точке карты.',
     build: ['boots', 'kaya', 'aghs', 'blink', 'dagon', 'bkb', 'vyse'],
     skillOrder: ['q', 'w', 'q', 'e', 'q', 'r', 'q', 'w', 'w', 'w', 'r', 'e', 'e', 'e', 'r'],
@@ -571,7 +571,7 @@
 
   hero('mirana', {
     name: 'Mirana', title: 'Принцесса Луны', attr: 'uni', roles: ['support', 'escape', 'nuker'], pos: [4, 5, 2],
-    str: 20, agi: 20, int: 22, gs: 2.4, ga: 3.2, gi: 1.9, dmg: 26, armor: 2, ranged: true, hue: 210,
+    str: 21, agi: 20, int: 22, gs: 2.5, ga: 3.2, gi: 1.9, dmg: 28, armor: 2, ranged: true, hue: 210,
     lore: 'Принцесса на огромной кошке. Её стрела оглушает издалека, а Лунная тень прячет всю команду.',
     build: ['boots', 'wand', 'glimmer', 'blink', 'aghs', 'mkb', 'bkb'],
     skillOrder: ['q', 'w', 'q', 'e', 'q', 'r', 'q', 'w', 'w', 'w', 'r', 'e', 'e', 'e', 'r'],
@@ -619,8 +619,8 @@
       } },
       e: { name: 'Теневая волна', icon: '🌊', card: {
         mana: [70, 80, 90, 100], tg: 'none',
-        desc: l => `Исцеляет всех союзников в зоне на <b>${L([120, 170, 220, 270], l)}</b> и наносит столько же магического урона всем врагам в зоне.`,
-        play: ({ s, h, l, E }) => { const v = L([120, 170, 220, 270], l); for (const a of E.friends(s, h)) E.heal(s, a, v, h); for (const f of E.foes(s, h)) E.dmg(s, h, f, v, 'magic'); },
+        desc: l => `Исцеляет всех союзников в зоне на <b>${L([110, 160, 210, 260], l)}</b> и наносит столько же магического урона всем врагам в зоне.`,
+        play: ({ s, h, l, E }) => { const v = L([110, 160, 210, 260], l); for (const a of E.friends(s, h)) E.heal(s, a, v, h); for (const f of E.foes(s, h)) E.dmg(s, h, f, v, 'magic'); },
       } },
       r: { name: 'Переплетение', icon: '🕸️', card: {
         mana: [100, 150, 200], tg: 'none',
