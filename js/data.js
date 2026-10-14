@@ -121,7 +121,7 @@
     play: ({ s, h, E }) => { const st = E.st(s, h); E.heal(s, h, 120 + st.maxHp * 0.18); E.mana(s, h, 60); },
   });
   card('gank', {
-    name: 'Засада', kind: 'basic', icon: '🗡️', mana: 0, tg: 'enemyNear', attack: true,
+    name: 'Засада', kind: 'basic', icon: '🗡️', mana: 0, tg: 'enemyNear', attack: true, moves: true,
     desc: () => 'Переместитесь к врагу в соседней зоне (или в своей) и атакуйте: <b>180%</b> урона атаки.',
     play: ({ s, h, t, E }) => { if (t.zone !== h.zone) E.moveTo(s, h, t.zone, true); E.atk(s, h, t, 1.8); },
   });
@@ -339,7 +339,7 @@
         play: ({ s, h, t, l, E }) => { E.atk(s, h, t, L([0.45, 0.6, 0.75, 0.9], l), { noAS: true, flat: 65, noCleave: true }); E.addSt(s, h, t, 'root', 1); },
       } },
       w: { name: 'Призрачный удар', icon: '👤', card: {
-        mana: [35, 40, 45, 50], tg: 'enemyNear', attack: true,
+        mana: [35, 40, 45, 50], tg: 'enemyNear', attack: true, moves: true,
         desc: l => `Мгновенно переносится к цели (своя или соседняя зона) и атакует <b>дважды</b> по ${L([85, 95, 105, 115], l)}% урона.`,
         play: ({ s, h, t, l, E }) => { if (t.zone !== h.zone) E.moveTo(s, h, t.zone, true); E.atk(s, h, t, L([0.85, 0.95, 1.05, 1.15], l)); if (!t.dead) E.atk(s, h, t, L([0.85, 0.95, 1.05, 1.15], l)); },
       } },
@@ -397,7 +397,7 @@
         stats: (b, l) => { b.manaBreak += L([25, 32, 39, 46], l); },
       }, desc: l => `<i>Пассивно:</i> каждая атака сжигает <b>${L([25, 32, 39, 46], l)}</b> маны и наносит 60% сожжённого физическим уроном.` },
       w: { name: 'Скачок', icon: '✴️', card: {
-        mana: [60, 55, 50, 45], tg: 'zone2',
+        mana: [60, 55, 50, 45], tg: 'zone2', moves: true,
         desc: l => `Переносится в любую зону на расстоянии до 2 шагов и берёт <b>1 карту</b>.`,
         play: ({ s, h, t, E }) => { E.moveTo(s, h, t, true); E.draw(s, h, 1); },
       } },
@@ -496,7 +496,7 @@
         play: ({ s, h, t, l, E }) => { E.rmSt(t, 'invis'); E.dmg(s, h, t, L([110, 185, 260, 335], l), 'magic'); if (E.chance(s, 0.6)) E.addSt(s, h, t, 'stun', 1); },
       } },
       e: { name: 'Прыжок в небеса', icon: '☁️', card: {
-        mana: 75, tg: 'zoneAdj',
+        mana: 75, tg: 'zoneAdj', moves: true,
         desc: l => `Зевс перелетает в соседнюю зону и бьёт всех врагов там на <b>${L([60, 90, 120, 150], l)}</b> магического урона.<br><i>Пассивно (Статическое поле): способности наносят ещё ${L([4, 6, 8, 10], l)}% текущего здоровья цели.</i>`,
         play: ({ s, h, t, l, E }) => { E.moveTo(s, h, t, true); for (const f of E.foes(s, h)) E.dmg(s, h, f, L([60, 90, 120, 150], l), 'magic'); },
       }, passive: { stats: (b, l) => { b.staticField = L([0.04, 0.06, 0.08, 0.1], l); } } },
@@ -588,7 +588,7 @@
         play: ({ s, h, t, l, E }) => { if (E.chance(s, 0.85)) { E.addSt(s, h, t, 'stun', L([1, 1, 2, 2], l)); E.dmg(s, h, t, L([90, 180, 270, 360], l), 'magic'); } else { E.fx(s, { type: 'miss', uid: t.uid }); E.log(s, `${E.nm(h)}: стрела пролетела мимо.`); } },
       } },
       e: { name: 'Прыжок', icon: '🐆', card: {
-        mana: 40, tg: 'zoneAdjOrSame',
+        mana: 40, tg: 'zoneAdjOrSame', moves: true,
         desc: l => `Прыжок в соседнюю зону (или на месте): <b>+${L([20, 30, 40, 50], l)}%</b> урона атаки на 2 хода и +1 перемещение.`,
         play: ({ s, h, t, l, E }) => { if (t !== h.zone) E.moveTo(s, h, t, true); E.addSt(s, h, h, 'dmgPct', 2, L([0.2, 0.3, 0.4, 0.5], l)); s.turn.moves += 1; },
       } },
@@ -643,7 +643,7 @@
         play: ({ s, h, t, l, E }) => { if (t.zone !== h.zone) E.moveTo(s, t, h.zone, true); E.dmg(s, h, t, L([80, 140, 200, 260], l), 'magic'); E.addSt(s, h, t, 'stun', 1); },
       } },
       w: { name: 'Растворение', icon: '🌫️', card: {
-        mana: [120, 120, 120, 120], tg: 'zoneAdjOrSame',
+        mana: [120, 120, 120, 120], tg: 'zoneAdjOrSame', moves: true,
         desc: l => `Дух растворяется и возникает в своей или соседней зоне, нанося там всем врагам <b>${L([120, 190, 260, 330], l)}</b> магического урона.`,
         play: ({ s, h, t, l, E }) => { if (t !== h.zone) E.moveTo(s, h, t, true); for (const f of E.foes(s, h)) E.dmg(s, h, f, L([120, 190, 260, 330], l), 'magic'); },
       } },
@@ -653,7 +653,7 @@
         play: ({ s, h, l, E }) => { E.addSt(s, h, h, 'shield', 2, L([80, 130, 180, 230], l)); for (const f of E.foes(s, h)) E.dmg(s, h, f, L([70, 120, 170, 220], l), 'magic'); },
       } },
       r: { name: 'Астральный шаг', icon: '✨', card: {
-        mana: [75, 75, 75], tg: 'enemyNear', attack: true,
+        mana: [75, 75, 75], tg: 'enemyNear', attack: true, moves: true,
         desc: l => `Шаг сквозь пространство к цели: атака 100% и <b>${L([150, 250, 350], l)}</b> магического урона, цель обездвижена на 1 ход.`,
         play: ({ s, h, t, l, E }) => { if (t.zone !== h.zone) E.moveTo(s, h, t.zone, true); E.atk(s, h, t, 1.0); if (!t.dead) { E.dmg(s, h, t, L([150, 250, 350], l) * (1 + E.st(s, h).ultBoost), 'magic'); E.addSt(s, h, t, 'root', 1); } },
       } },
@@ -674,7 +674,7 @@
     mana: 100, tg: 'none', desc: () => 'Союзники в зоне восстанавливают <b>250</b> здоровья и получают +5 брони на 2 хода.',
     play: ({ s, h, E }) => { for (const a of E.friends(s, h)) { E.heal(s, a, 250, h); E.addSt(s, h, a, 'armor', 2, 5); } } } });
   item('blink', { name: 'Блинк-кинжал', icon: '🗡️', cost: 2250, add: {}, desc: 'Даёт карту «Блинк».', card: {
-    name: 'Блинк', mana: 0, tg: 'zone2', desc: () => 'Мгновенный перенос в зону на расстоянии до 2 шагов. Можно <b>сыграть ещё одну карту</b> в этот ход.',
+    name: 'Блинк', mana: 0, tg: 'zone2', moves: true, desc: () => 'Мгновенный перенос в зону на расстоянии до 2 шагов. Можно <b>сыграть ещё одну карту</b> в этот ход.',
     play: ({ s, h, t, E }) => { E.moveTo(s, h, t, true); s.turn.cards += 1; } } });
   item('dagon', { name: 'Дагон', icon: '🔴', cost: 2700, add: { int: 15, all: 3 }, desc: '+15 к интеллекту, +3 ко всем атрибутам.', card: {
     mana: 120, tg: 'enemyNear', desc: () => 'Луч энергии: <b>400</b> магического урона врагу в своей или соседней зоне.',

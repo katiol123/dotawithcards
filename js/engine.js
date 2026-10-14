@@ -219,7 +219,7 @@
     let dealt;
     if (t === 'rosh') {
       dealt = E.dmgRosh(s, h, dmg, 'phys');
-      if (s.rosh.alive || dealt) { // Roshan strikes back
+      if (s.rosh.alive) { // Roshan strikes back
         const back = 40 + 4 * s.round;
         E.dmg(s, null, h, back, 'phys');
       }
@@ -435,7 +435,7 @@
 
   /* ---------- Movement ---------- */
   E.moveTo = (s, h, zone, free) => {
-    if (!zone || h.zone === zone) return;
+    if (!zone || h.zone === zone || !E.canEnter(h, zone)) return;
     const from = h.zone;
     h.zone = zone;
     E.fx(s, { type: 'move', uid: h.uid, from, to: zone });
@@ -465,6 +465,12 @@
   E.targets = (s, h, def) => {
     const zone = h.zone;
     const vis = x => E.visible(x);
+    // rooted heroes cannot dash/blink (teleport scrolls still work)
+    if (E.has(h, 'root') && def.moves) {
+      if (def.tg === 'enemyNear') return E.foes(s, h, zone).filter(vis).map(x => x.uid);
+      if (def.tg === 'zoneAdjOrSame') return [zone];
+      if (def.tg === 'zoneAdj' || def.tg === 'zone2') return [];
+    }
     switch (def.tg) {
       case 'none': return [null];
       case 'enemy': return E.foes(s, h, zone).filter(vis).map(x => x.uid);

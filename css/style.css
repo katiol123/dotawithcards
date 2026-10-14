@@ -613,7 +613,7 @@ i { color: #b9c1c9; }
   .side-0 { grid-area: s0; }
   .side-1 { grid-area: s1; }
   .log-panel { max-height: 260px; }
-  .actionbar { height: auto; flex-wrap: wrap; position: sticky; bottom: 0; }
+  .actionbar { height: auto; flex-wrap: wrap; position: static; }
   .ab-hero { width: 100%; }
   .ab-hand { width: 100%; order: 3; overflow-x: auto; justify-content: flex-start; padding-top: 50px; }
   .ab-buttons { width: 100%; flex-direction: row; flex-wrap: wrap; }
