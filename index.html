@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dota: Карточные войны</title>
+  <meta name="description" content="Пошаговая карточная версия Dota 2: 16 героев, уникальные колоды, сражения 5 на 5.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;700&family=Roboto+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- ============ MENU ============ -->
+    <section id="screen-menu" class="screen active">
+      <div class="menu-bg" aria-hidden="true"></div>
+      <div class="menu-embers" aria-hidden="true"></div>
+      <div class="menu-inner">
+        <div class="logo">
+          <div class="logo-sub">Защита Древних</div>
+          <h1 class="logo-title">DOTA<span>Карточные войны</span></h1>
+          <div class="logo-line"></div>
+          <p class="logo-tag">16 героев · уникальные колоды · битва 5 на 5 · фарм, ганги, Рошан и снос Древнего — всё картами</p>
+        </div>
+        <div class="menu-buttons">
+          <button class="btn btn-gold btn-big" data-action="new-game">Новая игра</button>
+          <button class="btn btn-dark" data-action="rules">Правила</button>
+          <button class="btn btn-dark" data-action="heroes">Герои и карты</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DRAFT ============ -->
+    <section id="screen-draft" class="screen">
+      <header class="draft-head">
+        <button class="btn btn-ghost" data-action="to-menu">← Меню</button>
+        <h2>Выбор героев</h2>
+        <div class="draft-turn" id="draft-turn"></div>
+      </header>
+      <div class="draft-body">
+        <div class="draft-team radiant" id="draft-team-0"></div>
+        <div class="draft-center">
+          <div class="draft-pool" id="draft-pool"></div>
+          <div class="draft-detail" id="draft-detail"></div>
+        </div>
+        <div class="draft-team dire" id="draft-team-1"></div>
+      </div>
+      <footer class="draft-foot">
+        <div class="draft-tools">
+          <button class="btn btn-dark" data-action="draft-random">🎲 Случайный состав</button>
+          <button class="btn btn-dark" data-action="draft-reset">Сбросить</button>
+        </div>
+        <div class="mode-select" id="mode-select">
+          <button class="mode" data-mode="radiant"><b>Играть за Свет</b><small>вы управляете Силами Света</small></button>
+          <button class="mode" data-mode="dire"><b>Играть за Тьму</b><small>вы управляете Силами Тьмы</small></button>
+          <button class="mode" data-mode="watch"><b>ИИ против ИИ</b><small>наблюдайте за битвой</small></button>
+          <button class="mode" data-mode="hotseat"><b>Два игрока</b><small>по очереди за одним экраном</small></button>
+        </div>
+        <button class="btn btn-gold btn-big" id="btn-start" data-action="start" disabled>В бой!</button>
+      </footer>
+    </section>
+
+    <!-- ============ GAME ============ -->
+    <section id="screen-game" class="screen">
+      <header class="topbar">
+        <div class="tb-team radiant"><span class="tb-name">Силы Света</span><span class="tb-score" id="score-0">0</span></div>
+        <div class="tb-center">
+          <div class="tb-round" id="tb-round">Раунд 1</div>
+          <div class="tb-nw" id="tb-nw"></div>
+        </div>
+        <div class="tb-team dire"><span class="tb-score" id="score-1">0</span><span class="tb-name">Силы Тьмы</span></div>
+        <div class="tb-controls">
+          <div class="speed" id="speed" title="Скорость ходов ИИ">
+            <button data-speed="0" title="Пауза">❚❚</button>
+            <button data-speed="1" class="on">1×</button>
+            <button data-speed="2">2×</button>
+            <button data-speed="4">4×</button>
+          </div>
+          <button class="btn btn-ghost btn-sm" data-action="rules">?</button>
+          <button class="btn btn-ghost btn-sm" data-action="quit">Выход</button>
+        </div>
+      </header>
+      <main class="board">
+        <aside class="side side-0">
+          <div class="tiles" id="tiles-0"></div>
+          <div class="panel objectives" id="objectives"></div>
+        </aside>
+        <div class="map-wrap">
+          <div class="map" id="map">
+            <svg class="map-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" id="map-svg"></svg>
+            <div class="map-layer" id="map-zones"></div>
+            <div class="map-layer" id="map-structs"></div>
+            <div class="map-layer" id="map-tokens"></div>
+            <div class="map-layer fx-layer" id="map-fx"></div>
+          </div>
+          <div class="stage" id="stage"></div>
+          <div class="banner" id="banner"></div>
+          <div class="target-hint" id="target-hint"></div>
+        </div>
+        <aside class="side side-1">
+          <div class="tiles" id="tiles-1"></div>
+          <div class="panel log-panel">
+            <div class="panel-title">Хроника битвы</div>
+            <div class="log" id="log"></div>
+          </div>
+        </aside>
+      </main>
+      <footer class="actionbar" id="actionbar">
+        <div class="ab-hero" id="ab-hero"></div>
+        <div class="ab-hand" id="ab-hand"></div>
+        <div class="ab-buttons" id="ab-buttons"></div>
+      </footer>
+    </section>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="tooltip" role="tooltip"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
